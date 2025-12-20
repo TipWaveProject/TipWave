@@ -1,0 +1,126 @@
+[
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_nickname", "type": "string" }
+    ],
+    "name": "setNickname",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_name", "type": "string" },
+      { "internalType": "uint256", "name": "_goalInWei", "type": "uint256" }
+    ],
+    "name": "addDonationPool",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_poolId", "type": "uint256" },
+      { "internalType": "string", "name": "_message", "type": "string" }
+    ],
+    "name": "donate",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_amountInWei", "type": "uint256" }
+    ],
+    "name": "withdraw",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_poolId", "type": "uint256" },
+      { "internalType": "bool", "name": "_isActive", "type": "bool" }
+    ],
+    "name": "togglePoolActive",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getPoolsCount",
+    "outputs": [
+      { "internalType": "uint256", "name": "", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+  "inputs": [{ "internalType": "uint256", "name": "_poolId", "type": "uint256" }],
+  "name": "getPool",
+  "outputs": [
+    { "internalType": "address", "name": "owner", "type": "address" },
+    { "internalType": "uint256", "name": "id", "type": "uint256" },
+    { "internalType": "string", "name": "name", "type": "string" },
+    { "internalType": "uint256", "name": "goalInWei", "type": "uint256" },
+    { "internalType": "uint256", "name": "tempAmountInWei", "type": "uint256" },
+    { "internalType": "bool", "name": "isActive", "type": "bool" },
+    { "internalType": "uint256", "name": "donationsCount", "type": "uint256" },
+    {
+      "internalType": "struct TrustWave.Donate[]",
+      "name": "donations",
+      "type": "tuple[]",
+      "components": [
+        { "internalType": "address", "name": "donor", "type": "address" },
+        { "internalType": "string", "name": "nickname", "type": "string" },
+        { "internalType": "string", "name": "message", "type": "string" },
+        { "internalType": "uint256", "name": "amountDonatedInWei", "type": "uint256" },
+        { "internalType": "uint256", "name": "timestamp", "type": "uint256" }
+      ]
+    }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_poolId", "type": "uint256" },
+      { "internalType": "uint256", "name": "_donateIndex", "type": "uint256" }
+    ],
+    "name": "getDonation",
+    "outputs": [
+      { "internalType": "address", "name": "donor", "type": "address" },
+      { "internalType": "string", "name": "nickname", "type": "string" },
+      { "internalType": "string", "name": "message", "type": "string" },
+      { "internalType": "uint256", "name": "amountDonatedInWei", "type": "uint256" },
+      { "internalType": "uint256", "name": "timestamp", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_user", "type": "address" }
+    ],
+    "name": "getUser",
+    "outputs": [
+      { "internalType": "string", "name": "nickname", "type": "string" },
+      { "internalType": "uint256[]", "name": "createdPoolIds", "type": "uint256[]" },
+      { "internalType": "uint256", "name": "balance", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+  "type": "event",
+  "name": "Donated",
+  "inputs": [
+    { "indexed": true, "name": "poolId", "type": "uint256" },
+    { "indexed": true, "name": "donor", "type": "address" },
+    { "indexed": false, "name": "nickname", "type": "string" },
+    { "indexed": false, "name": "message", "type": "string" },
+    { "indexed": false, "name": "amountInWei", "type": "uint256" }
+  ]
+}
+]

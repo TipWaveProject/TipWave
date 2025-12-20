@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    body {
+      background: transparent;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    .donation {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 20px 30px;
+      border-radius: 12px;
+      font-size: 22px;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      transition: opacity 0.5s;
+    }
+
+    .donation.show {
+      display: flex;
+      opacity: 1;
+    }
+
+    #donationImage {
+      width: 400px;
+      height: 400px;
+      object-fit: contain;
+    }
+
+    .nickname {
+      color: yellow;
+      font-weight: bold;
+      font-size: 24px;
+    }
+
+    .message {
+      color: white;
+      font-size: 20px;
+      text-align: center;
+    }
+
+    .amount {
+      color: #00ffea;
+      font-size: 22px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="donation" class="donation">
+  <img id="donationImage" />
+  <div class="nickname"></div>
+  <div class="amount"></div>
+  <div class="message"></div>
+</div>
+
+<script>
+  const donationEl = document.getElementById("donation");
+  const donationImage = document.getElementById("donationImage");
+  const nicknameEl = donationEl.querySelector(".nickname");
+  const amountEl = donationEl.querySelector(".amount");
+  const messageEl = donationEl.querySelector(".message");
+
+  let donationQueue = [];
+  let processing = false;
+
+  async function checkDonations() {
+    try {
+      const res = await fetch("/api/new-donations");
+      if (!res.ok) return;
+      const donations = await res.json();
+      donationQueue.push(...donations);
+      if (!processing) processQueue();
+    } catch (err) {
+      console.error("Ошибка при проверке донатов:", err);
+    }
+  }
+
+  async function processQueue() {
+    processing = true;
+    while (donationQueue.length > 0) {
+      const d = donationQueue.shift();
+      showDonation(d);
+      await wait(8000); // показываем 8 секунд
+    }
+    processing = false;
+  }
+
+  function showDonation(d) {
+    // Обновляем картинку с уникальным параметром, чтобы OBS подгрузил заново
+    donationImage.src = "/extension/donation.png?" + new Date().getTime();
+
+    nicknameEl.textContent = d.nickname;
+    amountEl.textContent = d.amount + " WEI";
+    messageEl.textContent = d.message;
+
+    donationEl.classList.remove("show");
+    setTimeout(() => {
+      donationEl.classList.add("show");
+    }, 50);
+
+    setTimeout(() => {
+      donationEl.classList.remove("show");
+    }, 7000);
+  }
+
+  function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  // Проверка новых донатов каждые 3 секунды
+  setInterval(checkDonations, 3000);
+</script>
+
+</body>
+</html>
