@@ -131,7 +131,8 @@ contract TrustWave {
         uint256 goalInWei,
         uint256 tempAmountInWei,
         bool isActive,
-        uint256 donationsCount
+        uint256 donationsCount,
+        Donate[] memory donations
     ) {
         if (_poolId == 0 || _poolId > donationsPools.length) revert DonationPoolNotFound();
         DonatePool storage pool = donationsPools[_poolId - 1];
@@ -142,7 +143,8 @@ contract TrustWave {
             pool.goalInWei,
             pool.tempAmountInWei,
             pool.isActive,
-            pool.donations.length
+            pool.donations.length,
+            pool.donations
         );
     }
 
